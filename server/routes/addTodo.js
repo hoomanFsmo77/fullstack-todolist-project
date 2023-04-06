@@ -3,7 +3,7 @@ const db=require('../database')
 const addTodoRoute=express.Router()
 
 addTodoRoute.post('/add',(req,res)=>{
-    if(req.body.content && req.body.status){
+    if(req.body.content && typeof req.body.status==='boolean'){
         const newTodo={
             id:db.todo.length+1,
             content:req.body.content,

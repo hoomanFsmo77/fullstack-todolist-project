@@ -1,11 +1,16 @@
 const express=require('express')
 const bodyParser=require('body-parser')
+//// db
+const database=require('./database')
+database.init()
+//// cors
 const cors=require('cors')
 //// routes
 const getAllTodoRoute=require('./routes/getAllTodo')
 const addTodoRoute=require('./routes/addTodo')
 const removeTodoRoute=require('./routes/removeTodo')
 const updateTodoRoute=require('./routes/updateTodo')
+
 
 const app=express()
 app.use(bodyParser.json())

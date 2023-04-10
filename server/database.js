@@ -1,8 +1,21 @@
-const database={
-    todo:[
-        {id:1,content:'todo number 1',status:true}
-    ]
+
+
+const mysql=require('mysql')
+const todoListDB=mysql.createConnection({
+    host:'localhost',
+    user:'root',
+    password:'',
+    database:'todo-list'
+})
+
+const init = () => {
+    todoListDB.connect((err)=>{
+        if(err){return}
+        console.log('database connected')
+    })
 }
 
 
-module.exports=database
+module.exports={
+    init,todoListDB
+}

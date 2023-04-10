@@ -1,12 +1,21 @@
 const express=require('express')
-const db=require('../database')
+const database = require("../database");
 const getAllTodoRoute=express.Router()
+const getAllQuery=`SELECT * FROM todo`
+
 
 getAllTodoRoute.get('/all',(req,res)=>{
-    res.send({
-        body:db.todo,
-        status:200
+    database.todoListDB.query(getAllQuery,(err,allTodo)=>{
+        const finalTodoList=[...allTodo].map(item=>{
+            item.status = item.status !== 0;
+            return item
+        })
+        res.send({
+            body:finalTodoList,
+            status:200
+        })
     })
+
 })
 
 getAllTodoRoute.get('/:id',(req,res)=>{

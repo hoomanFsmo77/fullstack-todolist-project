@@ -1,14 +1,22 @@
 const express=require('express')
-const db=require('../database')
+const database=require('../database')
 const removeTodoRoute=express.Router()
 
 removeTodoRoute.delete('/remove/:id',(req,res)=>{
     const id=Number(req.params.id)
     if(id){
-        db.todo.splice(db.todo.findIndex(item=>item.id===id),1)
-        res.send({
-            message:`todo id : ${id} removed`,
-            status:200
+        const removeQuery=`DELETE FROM todo WHERE id=${id}`
+        database.todoListDB.query(removeQuery,(err,response)=>{
+            if(err){
+                res.send({
+                    error:true,
+                    msg:'database error'
+                })
+            }
+            res.send({
+                message:`todo id : ${id} removed`,
+                status:200
+            })
         })
     }else{
         res.send({
